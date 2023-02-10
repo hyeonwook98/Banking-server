@@ -1,6 +1,6 @@
 ---
 name: Todo
-about: 할일이 있으신가요?
+about: "할일이 있으신가요?\U0001F4D7"
 title: ''
 labels: ''
 assignees: ''
