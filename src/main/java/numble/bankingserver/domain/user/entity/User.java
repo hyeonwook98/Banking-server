@@ -1,15 +1,68 @@
 package numble.bankingserver.domain.user.entity;
 
-import lombok.Data;
+import com.sun.istack.NotNull;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import numble.bankingserver.global.enums.Gender;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Data
+@Table(name = "tbl_user")
 public class User {
-    @Id @GeneratedValue
-    private Long id;
-    private String username;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long userId;
+
+    @NonNull
+    private String id;
+
+    @NonNull
+    private String password;
+
+    @NonNull
+    private String name;
+
+    @NonNull
+    @Column(length = 13)
+    private String phoneNumber;
+
+    @NonNull
+    private String email;
+
+    @NonNull
+    private String address;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
+    @NonNull
+    private String birthYear;
+
+    @Builder
+    public User(String id, String password, String name, String phoneNumber, String email, String address,
+                Gender gender, String birthYear) {
+        this.id = id;
+        this.password = password;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.address = address;
+        this.gender = gender;
+        this.birthYear = birthYear;
+    }
 }
