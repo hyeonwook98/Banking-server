@@ -19,7 +19,7 @@ public class UserJoinService {
     private final UserRepository userRepository;
 
     @Transactional
-    public ResponseEntity<SuccessResponse> userJoin(UserJoinRequest request) {
+    public ResponseEntity<SuccessResponse> joinUser(UserJoinRequest request) {
 
         userRepository.findById(request.getId()).ifPresent(user -> {
             throw new BankingException(ErrorCode.ALREADY_ID_EXIST);

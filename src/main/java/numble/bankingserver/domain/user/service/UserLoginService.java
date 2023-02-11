@@ -6,8 +6,11 @@ import numble.bankingserver.domain.user.dto.response.UserLoginResponse;
 import numble.bankingserver.domain.user.repository.UserRepository;
 import numble.bankingserver.global.error.ErrorCode;
 import numble.bankingserver.global.exception.BankingException;
+import numble.bankingserver.global.jwt.JwtProperties;
 import numble.bankingserver.global.jwt.JwtTokenProvider;
 import org.springframework.stereotype.Service;
+
+import javax.servlet.http.HttpServletResponse;
 
 @RequiredArgsConstructor
 @Service
@@ -16,7 +19,7 @@ public class UserLoginService {
     private final UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;
 
-    public UserLoginResponse userLogin(UserLoginRequest request) {
+    public UserLoginResponse loginUser(UserLoginRequest request, HttpServletResponse response) {
 
         String id = request.getId();
         String password = request.getPassword();
@@ -26,8 +29,10 @@ public class UserLoginService {
 
         String accessToken = jwtTokenProvider.createToken(id);
 
+        response.addHeader(JwtProperties.HEADER, JwtProperties.TOKEN_PREFIX+accessToken);
+
         return UserLoginResponse.builder()
-                .accessToken(accessToken)
+                .accessToken(JwtProperties.TOKEN_PREFIX +accessToken)
                 .build();
     }
 }

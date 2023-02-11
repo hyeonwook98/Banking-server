@@ -38,7 +38,7 @@ class UserJoinServiceTest {
                 .birthYear("1998-11-17")
                 .build();
 
-        userJoinService.userJoin(request);
+        userJoinService.joinUser(request);
         Optional<User> findUser = userRepository.findById("asdf");
 
         Assertions.assertEquals(request.getId(), findUser.get().getId());
@@ -60,7 +60,7 @@ class UserJoinServiceTest {
                 .birthYear("1998-11-17")
                 .build();
 
-        userJoinService.userJoin(request);
+        userJoinService.joinUser(request);
 
         UserJoinRequest request1 = UserJoinRequest.builder()
                 .id("asdf")
@@ -74,7 +74,7 @@ class UserJoinServiceTest {
                 .build();
 
         Assertions.assertThrows(BankingException.class, () -> {
-            userJoinService.userJoin(request1);
+            userJoinService.joinUser(request1);
         });
     }
 
@@ -94,7 +94,7 @@ class UserJoinServiceTest {
                 .birthYear("1998-11-17")
                 .build();
 
-        userJoinService.userJoin(request);
+        userJoinService.joinUser(request);
 
         UserJoinRequest request1 = UserJoinRequest.builder()
                 .id("asdf1")
@@ -108,7 +108,7 @@ class UserJoinServiceTest {
                 .build();
 
         Assertions.assertThrows(BankingException.class, () -> {
-            userJoinService.userJoin(request1);
+            userJoinService.joinUser(request1);
         });
     }
 
@@ -128,7 +128,7 @@ class UserJoinServiceTest {
                 .birthYear("1998-11-17")
                 .build();
 
-        userJoinService.userJoin(request);
+        userJoinService.joinUser(request);
 
         UserJoinRequest request1 = UserJoinRequest.builder()
                 .id("asd1")
@@ -142,7 +142,7 @@ class UserJoinServiceTest {
                 .build();
 
         Assertions.assertThrows(BankingException.class, () -> {
-            userJoinService.userJoin(request1);
+            userJoinService.joinUser(request1);
         });
     }
 }
