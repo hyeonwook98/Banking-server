@@ -15,8 +15,11 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -26,6 +29,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long userId;
 
     @NonNull
@@ -54,6 +58,9 @@ public class User {
 
     @NonNull
     private String birthYear;
+
+    @OneToMany(mappedBy = "user")
+    List<Account> accounts = new ArrayList<>();
 
     @Builder
     public User(String id, String password, String name, String phoneNumber, String email, String address,
