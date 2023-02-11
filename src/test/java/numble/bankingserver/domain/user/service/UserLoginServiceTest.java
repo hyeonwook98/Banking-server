@@ -13,6 +13,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletWebRequest;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletResponseWrapper;
 
 @SpringBootTest
 class UserLoginServiceTest {
@@ -27,6 +32,9 @@ class UserLoginServiceTest {
     @Transactional
     @DisplayName("로그인 성공")
     public void userLoginSuccess() {
+
+        ServletWebRequest servletContainer = (ServletWebRequest) RequestContextHolder.getRequestAttributes();
+        HttpServletResponse httpServletResponse = servletContainer.getResponse();
 
         User user = User.builder()
                 .id("aaaa")
@@ -46,8 +54,7 @@ class UserLoginServiceTest {
                 .password("aaaa")
                 .build();
 
-        UserLoginResponse response = userLoginService.userLogin(request);
-        System.out.println(response.getAccessToken());
+        UserLoginResponse response = userLoginService.loginUser(request, httpServletResponse);
 
         Assertions.assertTrue(!response.getAccessToken().isEmpty());
     }
@@ -56,6 +63,9 @@ class UserLoginServiceTest {
     @Transactional
     @DisplayName("로그인 실패")
     public void userLoginFail() {
+
+        ServletWebRequest servletContainer = (ServletWebRequest) RequestContextHolder.getRequestAttributes();
+        HttpServletResponse httpServletResponse = servletContainer.getResponse();
 
         User user = User.builder()
                 .id("aaaa")
@@ -76,7 +86,7 @@ class UserLoginServiceTest {
                 .build();
 
         Assertions.assertThrows(BankingException.class, () -> {
-            userLoginService.userLogin(request);
+            userLoginService.loginUser(request, httpServletResponse);
         });
 
     }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @RequiredArgsConstructor
@@ -24,12 +25,12 @@ public class UserController {
     private final UserLoginService userLoginService;
 
     @PostMapping("/join")
-    public ResponseEntity<SuccessResponse> userJoin(@RequestBody @Valid UserJoinRequest request) {
-        return userJoinService.userJoin(request);
+    public ResponseEntity<SuccessResponse> joinUser(@RequestBody @Valid UserJoinRequest request) {
+        return userJoinService.joinUser(request);
     }
 
     @PostMapping("/login")
-    public UserLoginResponse userLogin(@RequestBody @Valid UserLoginRequest request) {
-        return userLoginService.userLogin(request);
+    public UserLoginResponse loginUser(@RequestBody @Valid UserLoginRequest request, HttpServletResponse response) {
+        return userLoginService.loginUser(request, response);
     }
 }

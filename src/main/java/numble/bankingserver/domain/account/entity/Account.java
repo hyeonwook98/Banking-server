@@ -1,10 +1,11 @@
-package numble.bankingserver.domain.user.entity;
+package numble.bankingserver.domain.account.entity;
 
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import numble.bankingserver.domain.user.entity.User;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
