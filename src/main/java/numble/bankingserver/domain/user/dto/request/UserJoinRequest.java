@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 import lombok.NoArgsConstructor;
-import numble.bankingserver.global.enums.Gender;
+import numble.bankingserver.domain.enums.Gender;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

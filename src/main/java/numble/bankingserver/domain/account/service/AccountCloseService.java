@@ -25,17 +25,17 @@ public class AccountCloseService {
     private final JwtTokenProvider jwtTokenProvider;
 
     @Transactional
-    public ResponseEntity<SuccessResponse> closeAccount(CloseAccountRequest closeAccountRequest,
-                                                        HttpServletRequest request) {
+    public ResponseEntity<SuccessResponse> closeAccount(HttpServletRequest httpServletRequest,
+                                                        CloseAccountRequest request) {
 
-        String bearerToken = jwtTokenProvider.resolveToken(request);
+        String bearerToken = jwtTokenProvider.resolveToken(httpServletRequest);
         String token = jwtTokenProvider.parseToken(bearerToken);
 
         if (token == null) {
             throw new BankingException(ErrorCode.INVALID_JWT);
         }
 
-        accountRepository.deleteByAccountNumber(closeAccountRequest.getAccountNumber());
+        accountRepository.deleteByAccountNumber(request.getAccountNumber());
 
         return new ResponseEntity<>(
                 SuccessResponse.builder()

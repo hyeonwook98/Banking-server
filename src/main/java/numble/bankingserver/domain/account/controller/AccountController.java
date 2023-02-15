@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import numble.bankingserver.domain.account.dto.request.CloseAccountRequest;
 import numble.bankingserver.domain.account.service.AccountCloseService;
 import numble.bankingserver.domain.account.service.AccountOpenService;
+import numble.bankingserver.domain.accountnumber.dto.request.AccountOpenRequest;
 import numble.bankingserver.global.dto.response.SuccessResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,13 +25,14 @@ public class AccountController {
     private final AccountCloseService accountCloseService;
 
     @GetMapping("/open")
-    public ResponseEntity<SuccessResponse> openAccount(HttpServletRequest request) {
-        return accountOpenService.openAccount(request);
+    public ResponseEntity<SuccessResponse> openAccount(HttpServletRequest httpServletRequest,
+                                                       @RequestBody @Valid AccountOpenRequest request) {
+        return accountOpenService.openAccount(httpServletRequest, request);
     }
 
     @PostMapping("/close")
-    public ResponseEntity<SuccessResponse> closeAccount(@RequestBody @Valid CloseAccountRequest closeAccountRequest,
-                                                        HttpServletRequest request) {
-        return accountCloseService.closeAccount(closeAccountRequest, request);
+    public ResponseEntity<SuccessResponse> closeAccount(HttpServletRequest httpServletRequest,
+                                                        @RequestBody @Valid CloseAccountRequest request) {
+        return accountCloseService.closeAccount(httpServletRequest, request);
     }
 }

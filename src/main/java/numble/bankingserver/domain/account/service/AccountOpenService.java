@@ -3,8 +3,8 @@ package numble.bankingserver.domain.account.service;
 import lombok.RequiredArgsConstructor;
 import numble.bankingserver.domain.account.entity.Account;
 import numble.bankingserver.domain.account.repository.AccountRepository;
-import numble.bankingserver.domain.accountCount.domain.AccountCount;
-import numble.bankingserver.domain.accountCount.service.SetAccountNumberService;
+import numble.bankingserver.domain.accountnumber.dto.request.AccountOpenRequest;
+import numble.bankingserver.domain.accountnumber.service.AccountFactoryService;
 import numble.bankingserver.domain.user.entity.User;
 import numble.bankingserver.domain.user.repository.UserRepository;
 import numble.bankingserver.global.dto.response.SuccessResponse;
@@ -25,14 +25,14 @@ public class AccountOpenService {
 
     private final UserRepository userRepository;
     private final AccountRepository accountRepository;
-    private final SetAccountNumberService setAccountNumberService;
+    private final AccountFactoryService accountFactoryService;
     private final JwtTokenProvider jwtTokenProvider;
-    private final AccountCount accountCount;
 
     @Transactional
-    public ResponseEntity<SuccessResponse> openAccount(HttpServletRequest request) {
+    public ResponseEntity<SuccessResponse> openAccount(HttpServletRequest httpServletRequest,
+                                                       AccountOpenRequest request) {
 
-        String bearerToken = jwtTokenProvider.resolveToken(request);
+        String bearerToken = jwtTokenProvider.resolveToken(httpServletRequest);
         String token = jwtTokenProvider.parseToken(bearerToken);
 
         if (token == null) {
@@ -41,12 +41,11 @@ public class AccountOpenService {
 
         String findId = jwtTokenProvider.getTokenSubject(token);
         Optional<User> findUser = userRepository.findById(findId);
-        Long acountNumber = setAccountNumberService.setAccountNumber();
-        accountCount.addCount();
+        Long accountNumber = accountFactoryService.setAccountNumber(request);
 
         Account account = Account.builder()
                 .user(findUser.get())
-                .accountNumber(acountNumber)
+                .accountNumber(accountNumber)
                 .build();
 
         account.setUser(findUser.get());
