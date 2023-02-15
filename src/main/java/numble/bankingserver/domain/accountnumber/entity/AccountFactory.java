@@ -1,12 +1,11 @@
-package numble.bankingserver.domain.accountnumber.domain;
+package numble.bankingserver.domain.accountnumber.entity;
 
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import numble.bankingserver.domain.enums.AccountType;
+import numble.bankingserver.global.enums.AccountType;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;

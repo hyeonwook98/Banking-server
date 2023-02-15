@@ -1,7 +1,7 @@
 package numble.bankingserver.domain.accountnumber.dto.request;
 
 import lombok.Getter;
-import numble.bankingserver.domain.enums.AccountType;
+import numble.bankingserver.global.enums.AccountType;
 
 @Getter
 public class AccountOpenRequest {
