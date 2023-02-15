@@ -4,7 +4,7 @@ import numble.bankingserver.domain.user.dto.request.UserLoginRequest;
 import numble.bankingserver.domain.user.dto.response.UserLoginResponse;
 import numble.bankingserver.domain.user.entity.User;
 import numble.bankingserver.domain.user.repository.UserRepository;
-import numble.bankingserver.domain.enums.Gender;
+import numble.bankingserver.global.enums.Gender;
 import numble.bankingserver.global.exception.BankingException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

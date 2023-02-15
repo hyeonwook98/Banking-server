@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import numble.bankingserver.domain.account.entity.Account;
-import numble.bankingserver.domain.enums.Gender;
+import numble.bankingserver.global.enums.Gender;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

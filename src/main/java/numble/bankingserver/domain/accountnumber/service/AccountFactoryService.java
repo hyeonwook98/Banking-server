@@ -1,10 +1,10 @@
 package numble.bankingserver.domain.accountnumber.service;
 
 import lombok.RequiredArgsConstructor;
-import numble.bankingserver.domain.accountnumber.domain.AccountFactory;
+import numble.bankingserver.domain.accountnumber.entity.AccountFactory;
 import numble.bankingserver.domain.accountnumber.dto.request.AccountOpenRequest;
 import numble.bankingserver.domain.accountnumber.repository.AccountFactoryRepository;
-import numble.bankingserver.domain.enums.AccountType;
+import numble.bankingserver.global.enums.AccountType;
 import numble.bankingserver.global.error.ErrorCode;
 import numble.bankingserver.global.exception.BankingException;
 import org.springframework.stereotype.Service;
