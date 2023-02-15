@@ -5,10 +5,13 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import numble.bankingserver.domain.enums.AccountType;
 import numble.bankingserver.domain.user.entity.User;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,6 +19,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -37,10 +41,15 @@ public class Account {
 
     private Long balance = 0L;
 
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private AccountType accountType;
+
     @Builder
-    public Account(User user, Long accountNumber) {
+    public Account(User user, @NonNull Long accountNumber, AccountType accountType) {
         this.user = user;
         this.accountNumber = accountNumber;
+        this.accountType = accountType;
     }
 
     //연관관계 메서드

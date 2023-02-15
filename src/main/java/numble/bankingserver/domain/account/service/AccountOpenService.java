@@ -46,6 +46,7 @@ public class AccountOpenService {
         Account account = Account.builder()
                 .user(findUser.get())
                 .accountNumber(accountNumber)
+                .accountType(request.getAccountType())
                 .build();
 
         account.setUser(findUser.get());
