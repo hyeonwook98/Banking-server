@@ -46,7 +46,7 @@ public class Account {
     private AccountType accountType;
 
     @Builder
-    public Account(User user, @NonNull Long accountNumber, AccountType accountType) {
+    public Account(User user, Long accountNumber, AccountType accountType) {
         this.user = user;
         this.accountNumber = accountNumber;
         this.accountType = accountType;
