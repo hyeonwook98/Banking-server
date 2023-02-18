@@ -51,10 +51,4 @@ public class Account {
         this.accountNumber = accountNumber;
         this.accountType = accountType;
     }
-
-    //연관관계 메서드
-    public void setUser(User user) {
-        this.user = user;
-        user.getAccounts().add(this);
-    }
 }
