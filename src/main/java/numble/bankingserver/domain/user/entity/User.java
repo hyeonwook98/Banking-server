@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import numble.bankingserver.global.entity.BaseTimeEntity;
 import numble.bankingserver.global.enums.Gender;
 
 import javax.persistence.Column;
@@ -22,7 +23,7 @@ import javax.validation.constraints.Email;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "tbl_user")
-public class User {
+public class User extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

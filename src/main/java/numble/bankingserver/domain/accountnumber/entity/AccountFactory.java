@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import numble.bankingserver.global.entity.BaseTimeEntity;
 import numble.bankingserver.global.enums.AccountType;
 
 import javax.persistence.Entity;
@@ -19,7 +20,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "tbl_accountfactory")
-public class AccountFactory {
+public class AccountFactory extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
