@@ -22,6 +22,7 @@ public enum ErrorCode {
     ALREADY_ID_EXIST(409, "Already Id Exist"),
     ALREADY_EMAIL_EXIST(409, "Already Email Exist"),
     ALREADY_PHONENUMBER_EXIST(409, "Already PhoneNumber Exist"),
+    ALREADY_FRIENDLIST_EXIST(409,"Already FriendList Exist"),
 
     // 500
     ACCOUNT_NUMBER_OVER(500,"Acount Number Over")

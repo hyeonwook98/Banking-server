@@ -49,8 +49,6 @@ public class AccountOpenService {
                 .accountType(request.getAccountType())
                 .build();
 
-        account.setUser(findUser.get());
-
         accountRepository.save(account);
 
         return new ResponseEntity<>(

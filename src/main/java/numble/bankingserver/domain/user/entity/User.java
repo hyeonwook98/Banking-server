@@ -60,9 +60,6 @@ public class User {
     @NonNull
     private String birthYear;
 
-    @OneToMany(mappedBy = "user")
-    List<Account> accounts = new ArrayList<>();
-
     @Builder
     public User(String id, String password, String name, String phoneNumber, String email, String address,
                 Gender gender, String birthYear) {

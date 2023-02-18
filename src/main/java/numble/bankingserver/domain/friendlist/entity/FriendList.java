@@ -28,16 +28,16 @@ public class FriendList {
     private Long friendId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User requestUser;
+    @JoinColumn(name = "host_user_id", nullable = false)
+    private User hostUser;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User responseUser;
+    @JoinColumn(name = "friend_user_id", nullable = false)
+    private User friendUser;
 
     @Builder
-    public FriendList(User requestUser, User responseUser) {
-        this.requestUser = requestUser;
-        this.responseUser = responseUser;
+    public FriendList(User hostUser, User friendUser) {
+        this.hostUser = hostUser;
+        this.friendUser = friendUser;
     }
 }
