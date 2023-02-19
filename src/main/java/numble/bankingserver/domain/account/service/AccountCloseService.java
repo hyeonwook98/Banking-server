@@ -35,6 +35,8 @@ public class AccountCloseService {
             throw new BankingException(ErrorCode.INVALID_JWT);
         }
 
+        accountRepository.findByAccountNumber(request.getAccountNumber())
+                .orElseThrow(() -> new BankingException(ErrorCode.ACCOUNT_NOT_FOUND));
         accountRepository.deleteByAccountNumber(request.getAccountNumber());
 
         return new ResponseEntity<>(

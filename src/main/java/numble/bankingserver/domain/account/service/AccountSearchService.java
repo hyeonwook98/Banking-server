@@ -11,6 +11,7 @@ import numble.bankingserver.global.error.ErrorCode;
 import numble.bankingserver.global.exception.BankingException;
 import numble.bankingserver.global.jwt.JwtTokenProvider;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -25,6 +26,7 @@ public class AccountSearchService {
     private final UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;
 
+    @Transactional(readOnly = true)
     public SearchAccountResponse searchAccount(HttpServletRequest httpServletRequest) {
 
         String bearerToken = jwtTokenProvider.resolveToken(httpServletRequest);

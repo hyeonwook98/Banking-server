@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -26,6 +27,7 @@ public class FriendSearchService {
     private final FriendListRepository friendListRepository;
     private final JwtTokenProvider jwtTokenProvider;
 
+    @Transactional(readOnly = true)
     public SearchFriendListResponse searchFriend(HttpServletRequest httpServletRequest) {
 
         String bearerToken = jwtTokenProvider.resolveToken(httpServletRequest);

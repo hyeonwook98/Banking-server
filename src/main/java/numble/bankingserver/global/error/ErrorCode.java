@@ -16,6 +16,7 @@ public enum ErrorCode {
 
     // 404
     USER_NOT_FOUND(404, "User Not Found"),
+    ACCOUNT_NOT_FOUND(404, "Account Not Found"),
 
 
     // 409

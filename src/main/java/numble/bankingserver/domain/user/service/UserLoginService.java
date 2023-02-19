@@ -9,6 +9,7 @@ import numble.bankingserver.global.exception.BankingException;
 import numble.bankingserver.global.jwt.JwtProperties;
 import numble.bankingserver.global.jwt.JwtTokenProvider;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -19,6 +20,7 @@ public class UserLoginService {
     private final UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;
 
+    @Transactional
     public UserLoginResponse loginUser(UserLoginRequest request, HttpServletResponse response) {
 
         String id = request.getId();

@@ -27,7 +27,7 @@ public class AccountController {
     private final AccountCloseService accountCloseService;
     private final AccountSearchService accountSearchService;
 
-    @GetMapping("/open")
+    @PostMapping("/open")
     public ResponseEntity<SuccessResponse> openAccount(HttpServletRequest httpServletRequest,
                                                        @RequestBody @Valid AccountOpenRequest request) {
         return accountOpenService.openAccount(httpServletRequest, request);

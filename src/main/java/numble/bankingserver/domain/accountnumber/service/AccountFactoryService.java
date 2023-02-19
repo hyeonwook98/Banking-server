@@ -8,6 +8,7 @@ import numble.bankingserver.global.enums.AccountType;
 import numble.bankingserver.global.error.ErrorCode;
 import numble.bankingserver.global.exception.BankingException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
@@ -15,6 +16,7 @@ public class AccountFactoryService {
 
     private final AccountFactoryRepository accountFactoryRepository;
 
+    @Transactional
     public Long setAccountNumber(AccountOpenRequest request) {
 
         if (request.getAccountType() != AccountType.SAVINGS_ACCOUNT) {
