@@ -17,6 +17,7 @@ public enum ErrorCode {
     // 404
     USER_NOT_FOUND(404, "User Not Found"),
     ACCOUNT_NOT_FOUND(404, "Account Not Found"),
+    NOT_FRIEND(404, "Not Friend"),
 
 
     // 409
@@ -26,7 +27,8 @@ public enum ErrorCode {
     ALREADY_FRIENDLIST_EXIST(409,"Already FriendList Exist"),
 
     // 500
-    ACCOUNT_NUMBER_OVER(500,"Acount Number Over")
+    ACCOUNT_NUMBER_OVER(500,"Acount Number Over"),
+    BALANCE_LACK(500,"Balance Lack")
     ;
 
     private final int status;

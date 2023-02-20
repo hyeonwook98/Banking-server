@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class SearchAccountResponse<T> {
+public class AccountSearchResponse<T> {
     private Long count;
     private T data;
 }

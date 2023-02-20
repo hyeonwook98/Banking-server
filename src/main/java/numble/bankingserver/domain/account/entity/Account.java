@@ -8,6 +8,8 @@ import lombok.NonNull;
 import numble.bankingserver.global.entity.BaseTimeEntity;
 import numble.bankingserver.global.enums.AccountType;
 import numble.bankingserver.domain.user.entity.User;
+import numble.bankingserver.global.error.ErrorCode;
+import numble.bankingserver.global.exception.BankingException;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -40,7 +42,7 @@ public class Account extends BaseTimeEntity {
     @NonNull
     private Long accountNumber;
 
-    private Long balance = 0L;
+    private Long balance = 10000L;
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -51,5 +53,17 @@ public class Account extends BaseTimeEntity {
         this.user = user;
         this.accountNumber = accountNumber;
         this.accountType = accountType;
+    }
+
+    public Long withdraw(Long amount) {
+        if (balance - amount < 0) {
+            throw new BankingException(ErrorCode.BALANCE_LACK);
+        }
+        balance -= amount;
+        return balance;
+    }
+
+    public void deposit(Long amount) {
+        balance += amount;
     }
 }
