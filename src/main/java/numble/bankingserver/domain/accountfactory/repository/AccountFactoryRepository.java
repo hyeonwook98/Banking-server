@@ -1,6 +1,6 @@
-package numble.bankingserver.domain.accountnumber.repository;
+package numble.bankingserver.domain.accountfactory.repository;
 
-import numble.bankingserver.domain.accountnumber.entity.AccountFactory;
+import numble.bankingserver.domain.accountfactory.entity.AccountFactory;
 import numble.bankingserver.global.enums.AccountType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;

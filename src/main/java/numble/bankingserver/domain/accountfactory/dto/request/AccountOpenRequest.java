@@ -1,4 +1,4 @@
-package numble.bankingserver.domain.accountnumber.dto.request;
+package numble.bankingserver.domain.accountfactory.dto.request;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

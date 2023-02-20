@@ -2,10 +2,10 @@ package numble.bankingserver.domain.account.service;
 
 import numble.bankingserver.domain.account.entity.Account;
 import numble.bankingserver.domain.account.repository.AccountRepository;
-import numble.bankingserver.domain.accountnumber.dto.request.AccountOpenRequest;
-import numble.bankingserver.domain.accountnumber.entity.AccountFactory;
-import numble.bankingserver.domain.accountnumber.repository.AccountFactoryRepository;
-import numble.bankingserver.domain.accountnumber.service.AccountFactoryService;
+import numble.bankingserver.domain.accountfactory.dto.request.AccountOpenRequest;
+import numble.bankingserver.domain.accountfactory.entity.AccountFactory;
+import numble.bankingserver.domain.accountfactory.repository.AccountFactoryRepository;
+import numble.bankingserver.domain.accountfactory.service.AccountFactoryService;
 import numble.bankingserver.domain.user.entity.User;
 import numble.bankingserver.domain.user.repository.UserRepository;
 import numble.bankingserver.global.enums.AccountType;
@@ -15,7 +15,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 
 import java.util.Optional;
 import java.util.concurrent.CountDownLatch;

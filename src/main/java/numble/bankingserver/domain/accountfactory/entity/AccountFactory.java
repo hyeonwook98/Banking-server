@@ -1,4 +1,4 @@
-package numble.bankingserver.domain.accountnumber.entity;
+package numble.bankingserver.domain.accountfactory.entity;
 
 import lombok.AccessLevel;
 import lombok.Builder;
