@@ -13,6 +13,7 @@ public enum ErrorCode {
     INVALID_JWT(401, "Invalid Jwt"),
     EXPIRED_JWT(401, "Expired Jwt"),
     WRONG_ACCOUNT_TYPE(401, "Wrong Account Type"),
+    WRONG_ACCESS(401, "Wrong Access"),
 
     // 404
     USER_NOT_FOUND(404, "User Not Found"),
