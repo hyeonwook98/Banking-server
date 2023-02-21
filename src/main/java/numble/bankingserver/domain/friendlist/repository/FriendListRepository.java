@@ -12,7 +12,9 @@ import java.util.Optional;
 
 public interface FriendListRepository extends JpaRepository<FriendList, Long> {
     Optional<FriendList> findByHostUserAndFriendUser(User hostUser, User friendUser);
-
     @Query("select f.friendUser from FriendList f where f.hostUser = :hostUser")
     Page<User> findFriendUser(@Param("hostUser") User hostUser, Pageable pageable);
+
+    @Query("delete from FriendList f where f.hostUser = :user or f.friendUser = :user")
+    void deleteFriendList(@Param("user") User user);
 }

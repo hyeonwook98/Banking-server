@@ -52,7 +52,7 @@ public class AccountTransferService {
         friendAccount.deposit(request.getSentAmount());
 
         transferHistoryRepository.save(TransferHistory.builder()
-                .hostAccount(hostAccount)
+                .hostAccountNumber(hostAccount.getAccountNumber())
                 .friendAccountNumber(request.getFriendAccountNumber())
                 .friendName(friendAccount.getUser().getName())
                 .transferType(TransferType.WITHDRAW)
@@ -61,7 +61,7 @@ public class AccountTransferService {
                 .build());
 
         transferHistoryRepository.save(TransferHistory.builder()
-                .hostAccount(friendAccount)
+                .hostAccountNumber(friendAccount.getAccountNumber())
                 .friendAccountNumber(request.getHostAccountNumber())
                 .friendName(hostAccount.getUser().getName())
                 .transferType(TransferType.DEPOSIT)

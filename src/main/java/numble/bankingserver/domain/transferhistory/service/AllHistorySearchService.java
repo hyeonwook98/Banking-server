@@ -41,13 +41,13 @@ public class AllHistorySearchService {
         }
 
         String findId = jwtTokenProvider.getTokenSubject(token);
-        Optional<User> findUser = userRepository.findById(findId);
+        Optional<User> hostUser = userRepository.findById(findId);
 
-        Account hostAccount = accountRepository.findByAccountNumber(request.getAccountNumber())
-                .orElseThrow(() -> new BankingException(ErrorCode.ACCOUNT_NOT_FOUND));
+        accountRepository.findByUserAndAccountNumber(hostUser.get(), request.getAccountNumber())
+                .orElseThrow(() -> new BankingException(ErrorCode.WRONG_ACCESS));
 
         List<TransferHistory> transferHistories = transferHistoryRepository.
-                findByHostAccountOrderByCreatedAtDesc(hostAccount);
+                findByHostAccountNumberOrderByCreatedAtDesc(request.getAccountNumber());
 
         List<TransferHistorySearchDto> transferHistoryList = transferHistories.stream()
                 .map(t -> new TransferHistorySearchDto(t.getFriendAccountNumber(), t.getFriendName(),

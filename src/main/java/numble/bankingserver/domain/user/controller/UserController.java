@@ -4,15 +4,18 @@ import lombok.RequiredArgsConstructor;
 import numble.bankingserver.domain.user.dto.request.UserJoinRequest;
 import numble.bankingserver.domain.user.dto.request.UserLoginRequest;
 import numble.bankingserver.domain.user.dto.response.UserLoginResponse;
+import numble.bankingserver.domain.user.service.UserDeleteService;
 import numble.bankingserver.domain.user.service.UserJoinService;
 import numble.bankingserver.domain.user.service.UserLoginService;
 import numble.bankingserver.global.dto.response.SuccessResponse;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
@@ -23,6 +26,7 @@ public class UserController {
 
     private final UserJoinService userJoinService;
     private final UserLoginService userLoginService;
+    private final UserDeleteService userDeleteService;
 
     @PostMapping("/join")
     public ResponseEntity<SuccessResponse> joinUser(@RequestBody @Valid UserJoinRequest request) {
@@ -32,5 +36,10 @@ public class UserController {
     @PostMapping("/login")
     public UserLoginResponse loginUser(@RequestBody @Valid UserLoginRequest request, HttpServletResponse response) {
         return userLoginService.loginUser(request, response);
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<SuccessResponse> deleteUser(HttpServletRequest httpServletRequest) {
+        return userDeleteService.deleteUser(httpServletRequest);
     }
 }

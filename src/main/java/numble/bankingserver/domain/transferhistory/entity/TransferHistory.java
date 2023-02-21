@@ -31,9 +31,7 @@ public class TransferHistory extends BaseTimeEntity {
     private Long id;
 
     @NonNull
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "host_account_id")
-    private Account hostAccount;
+    private Long hostAccountNumber;
 
     @NonNull
     private Long friendAccountNumber;
@@ -52,9 +50,9 @@ public class TransferHistory extends BaseTimeEntity {
     private Long balance;
 
     @Builder
-    public TransferHistory(Account hostAccount, Long friendAccountNumber, String friendName,
+    public TransferHistory(Long hostAccountNumber, Long friendAccountNumber, String friendName,
                            TransferType transferType, Long amount, Long balance) {
-        this.hostAccount = hostAccount;
+        this.hostAccountNumber = hostAccountNumber;
         this.friendAccountNumber = friendAccountNumber;
         this.friendName = friendName;
         this.transferType = transferType;

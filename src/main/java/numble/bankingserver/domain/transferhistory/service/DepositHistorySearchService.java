@@ -48,7 +48,7 @@ public class DepositHistorySearchService {
                 .orElseThrow(() -> new BankingException(ErrorCode.ACCOUNT_NOT_FOUND));
 
         List<TransferHistory> transferHistories = transferHistoryRepository.
-                findByHostAccountAndTransferTypeOrderByCreatedAtDesc(hostAccount, TransferType.DEPOSIT);
+                findByHostAccountNumberAndTransferTypeOrderByCreatedAtDesc(request.getAccountNumber(), TransferType.DEPOSIT);
 
         List<TransferHistorySearchDto> transferHistoryList = transferHistories.stream()
                 .map(t -> new TransferHistorySearchDto(t.getFriendAccountNumber(), t.getFriendName(),

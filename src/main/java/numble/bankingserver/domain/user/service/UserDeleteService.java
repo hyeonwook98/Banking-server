@@ -1,10 +1,8 @@
-package numble.bankingserver.domain.account.service;
+package numble.bankingserver.domain.user.service;
 
 import lombok.RequiredArgsConstructor;
-import numble.bankingserver.domain.account.entity.Account;
 import numble.bankingserver.domain.account.repository.AccountRepository;
-import numble.bankingserver.domain.accountfactory.dto.request.AccountOpenRequest;
-import numble.bankingserver.domain.accountfactory.service.AccountFactoryService;
+import numble.bankingserver.domain.friendlist.repository.FriendListRepository;
 import numble.bankingserver.domain.user.entity.User;
 import numble.bankingserver.domain.user.repository.UserRepository;
 import numble.bankingserver.global.dto.response.SuccessResponse;
@@ -14,23 +12,19 @@ import numble.bankingserver.global.jwt.JwtTokenProvider;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
-public class AccountOpenService {
+public class UserDeleteService {
 
     private final UserRepository userRepository;
     private final AccountRepository accountRepository;
-    private final AccountFactoryService accountFactoryService;
     private final JwtTokenProvider jwtTokenProvider;
 
-    @Transactional
-    public ResponseEntity<SuccessResponse> openAccount(HttpServletRequest httpServletRequest,
-                                                       AccountOpenRequest request) {
+
+    public ResponseEntity<SuccessResponse> deleteUser(HttpServletRequest httpServletRequest) {
 
         String bearerToken = jwtTokenProvider.resolveToken(httpServletRequest);
         String token = jwtTokenProvider.parseToken(bearerToken);
@@ -40,24 +34,20 @@ public class AccountOpenService {
         }
 
         String findId = jwtTokenProvider.getTokenSubject(token);
-        User findUser = userRepository.findById(findId)
+        User hostUser = userRepository.findById(findId)
                 .orElseThrow(() -> new BankingException(ErrorCode.USER_NOT_FOUND));
-        Long accountNumber = accountFactoryService.setAccountNumber(request);
 
-        Account account = Account.builder()
-                .user(findUser)
-                .accountNumber(accountNumber)
-                .accountType(request.getAccountType())
-                .build();
-
-        accountRepository.save(account);
+        if (accountRepository.findByUser(hostUser).size() != 0) {
+            throw new BankingException(ErrorCode.ACCOUNT_STILL_EXISTS);
+        }
+        userRepository.delete(hostUser);
 
         return new ResponseEntity<>(
                 SuccessResponse.builder()
-                        .status(HttpStatus.CREATED.value())
-                        .message("Account Open Success")
+                        .status(HttpStatus.OK.value())
+                        .message("Delete User Success")
                         .build(),
-                HttpStatus.valueOf(HttpStatus.CREATED.value())
+                HttpStatus.valueOf(HttpStatus.OK.value())
         );
     }
 }

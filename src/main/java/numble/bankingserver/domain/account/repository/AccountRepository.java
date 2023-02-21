@@ -14,9 +14,14 @@ import java.util.Optional;
 public interface AccountRepository extends JpaRepository<Account, Long> {
 
     Optional<Account> findByAccountNumber(Long accountNumber);
+
     @Lock(value = LockModeType.PESSIMISTIC_WRITE)
     @Query("select a from Account a where a.accountNumber = :accountNumber")
     Optional<Account> findByAccountNumberWithPessimisticLock(@Param("accountNumber") Long accountNumber);
+
     List<Account> findByUserOrderByCreatedAt(User user);
+
     Optional<Account> findByUserAndAccountNumber(User user, Long accountNumber);
+
+    List<Account> findByUser(User user);
 }

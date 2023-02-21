@@ -47,7 +47,7 @@ public class WithdrawHistorySearchService {
                 .orElseThrow(() -> new BankingException(ErrorCode.ACCOUNT_NOT_FOUND));
 
         List<TransferHistory> transferHistories = transferHistoryRepository.
-                findByHostAccountAndTransferTypeOrderByCreatedAtDesc(hostAccount, TransferType.WITHDRAW);
+                findByHostAccountNumberAndTransferTypeOrderByCreatedAtDesc(request.getAccountNumber(), TransferType.WITHDRAW);
 
         List<TransferHistorySearchDto> transferHistoryList = transferHistories.stream()
                 .map(t -> new TransferHistorySearchDto(t.getFriendAccountNumber(), t.getFriendName(),
