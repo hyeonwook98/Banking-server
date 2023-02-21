@@ -39,6 +39,9 @@ public class AccountVerifyService {
         User hostUser = userRepository.findById(findId)
                 .orElseThrow(() -> new BankingException(ErrorCode.USER_NOT_FOUND));
 
+        accountRepository.findByUserAndAccountNumber(hostUser, request.getHostAccountNumber())
+                .orElseThrow(() -> new BankingException(ErrorCode.WRONG_ACCESS));
+
         Account friendAccount = accountRepository.findByAccountNumber(request.getFriendAccountNumber())
                 .orElseThrow(() -> new BankingException(ErrorCode.ACCOUNT_NOT_FOUND));
 
