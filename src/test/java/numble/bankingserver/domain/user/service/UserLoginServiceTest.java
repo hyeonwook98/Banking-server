@@ -35,11 +35,11 @@ class UserLoginServiceTest {
         HttpServletResponse httpServletResponse = servletContainer.getResponse();
 
         User user = User.builder()
-                .id("aaaa")
-                .password("aaaa")
-                .name("김현욱")
-                .phoneNumber("010-2988-9331")
-                .email("hyeonwook9@naver.com")
+                .id("asdf")
+                .password("asdf")
+                .name("홍길동")
+                .phoneNumber("010-0000-0000")
+                .email("ghdrlfehd@naver.com")
                 .address("경상남도 통영시")
                 .gender(Gender.MAN)
                 .birthYear("1998-11-17")
@@ -48,8 +48,8 @@ class UserLoginServiceTest {
         userRepository.save(user);
 
         UserLoginRequest request = UserLoginRequest.builder()
-                .id("aaaa")
-                .password("aaaa")
+                .id("asdf")
+                .password("asdf")
                 .build();
 
         UserLoginResponse response = userLoginService.loginUser(request, httpServletResponse);
@@ -66,11 +66,11 @@ class UserLoginServiceTest {
         HttpServletResponse httpServletResponse = servletContainer.getResponse();
 
         User user = User.builder()
-                .id("aaaa")
-                .password("aaaa")
-                .name("김현욱")
-                .phoneNumber("010-2988-9331")
-                .email("hyeonwook9@naver.com")
+                .id("asdf")
+                .password("asdf")
+                .name("홍길동")
+                .phoneNumber("010-0000-0000")
+                .email("ghdrlfehd@naver.com")
                 .address("경상남도 통영시")
                 .gender(Gender.MAN)
                 .birthYear("1998-11-17")
@@ -79,8 +79,8 @@ class UserLoginServiceTest {
         userRepository.save(user);
 
         UserLoginRequest request = UserLoginRequest.builder()
-                .id("aaa")
-                .password("aaaa")
+                .id("asdf")
+                .password("11")
                 .build();
 
         Assertions.assertThrows(BankingException.class, () -> {

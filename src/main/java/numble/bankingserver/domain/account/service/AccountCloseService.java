@@ -7,7 +7,7 @@ import numble.bankingserver.domain.account.repository.AccountRepository;
 import numble.bankingserver.global.dto.response.SuccessResponse;
 import numble.bankingserver.global.error.ErrorCode;
 import numble.bankingserver.global.exception.BankingException;
-import numble.bankingserver.global.jwt.JwtTokenProvider;
+import numble.bankingserver.global.jwt.JwtTokenCheckService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -20,18 +20,13 @@ import javax.servlet.http.HttpServletRequest;
 public class AccountCloseService {
 
     private final AccountRepository accountRepository;
-    private final JwtTokenProvider jwtTokenProvider;
+    private final JwtTokenCheckService jwtTokenCheckService;
 
     @Transactional
     public ResponseEntity<SuccessResponse> closeAccount(HttpServletRequest httpServletRequest,
                                                         AccountCloseRequest request) {
 
-        String bearerToken = jwtTokenProvider.resolveToken(httpServletRequest);
-        String token = jwtTokenProvider.parseToken(bearerToken);
-
-        if (token == null) {
-            throw new BankingException(ErrorCode.INVALID_JWT);
-        }
+        jwtTokenCheckService.checkToken(httpServletRequest);
 
         Account account = accountRepository.findByAccountNumberWithPessimisticLock(request.getAccountNumber())
                 .orElseThrow(() -> new BankingException(ErrorCode.ACCOUNT_NOT_FOUND));

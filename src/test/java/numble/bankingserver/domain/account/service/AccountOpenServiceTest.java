@@ -10,12 +10,18 @@ import numble.bankingserver.domain.user.entity.User;
 import numble.bankingserver.domain.user.repository.UserRepository;
 import numble.bankingserver.global.enums.AccountType;
 import numble.bankingserver.global.enums.Gender;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -54,16 +60,16 @@ class AccountOpenServiceTest {
         User user = User.builder()
                 .id("asdf")
                 .password("asdf")
-                .name("김현욱")
-                .phoneNumber("010-2988-9330")
-                .email("hyeonwook98@naver.com")
+                .name("홍길동")
+                .phoneNumber("010-0000-0000")
+                .email("ghdrlfehd@naver.com")
                 .address("경상남도 통영시")
                 .gender(Gender.MAN)
                 .birthYear("1998-11-17")
                 .build();
 
-        userRepository.saveAndFlush(user);
-        Optional<User> findUser = userRepository.findByPhoneNumber("010-2988-9330");
+        userRepository.save(user);
+        Optional<User> findUser = userRepository.findByPhoneNumber("010-0000-0000");
 
         for (int i = 0; i < threadCount; i++) {
             executorService.submit(() -> {
