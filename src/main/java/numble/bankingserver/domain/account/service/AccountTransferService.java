@@ -6,13 +6,9 @@ import numble.bankingserver.domain.account.entity.Account;
 import numble.bankingserver.domain.account.repository.AccountRepository;
 import numble.bankingserver.domain.transferhistory.entity.TransferHistory;
 import numble.bankingserver.domain.transferhistory.repository.TransferHistoryRepository;
-import numble.bankingserver.domain.user.entity.User;
-import numble.bankingserver.domain.user.repository.UserRepository;
 import numble.bankingserver.global.dto.response.SuccessResponse;
 import numble.bankingserver.global.enums.TransferType;
-import numble.bankingserver.global.error.ErrorCode;
-import numble.bankingserver.global.exception.BankingException;
-import numble.bankingserver.global.jwt.JwtTokenProvider;
+import numble.bankingserver.global.jwt.JwtTokenCheckService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -24,25 +20,15 @@ import javax.servlet.http.HttpServletRequest;
 @Service
 public class AccountTransferService {
 
-    private final JwtTokenProvider jwtTokenProvider;
-    private final UserRepository userRepository;
     private final AccountRepository accountRepository;
     private final TransferHistoryRepository transferHistoryRepository;
+    private final JwtTokenCheckService jwtTokenCheckService;
 
     @Transactional
     public ResponseEntity<SuccessResponse> transferAccount(HttpServletRequest httpServletRequest,
                                                            AccountVerifyRequest request) {
 
-        String bearerToken = jwtTokenProvider.resolveToken(httpServletRequest);
-        String token = jwtTokenProvider.parseToken(bearerToken);
-
-        if (token == null) {
-            throw new BankingException(ErrorCode.INVALID_JWT);
-        }
-
-        String findId = jwtTokenProvider.getTokenSubject(token);
-        User hostUser = userRepository.findById(findId)
-                .orElseThrow(() -> new BankingException(ErrorCode.USER_NOT_FOUND));
+        jwtTokenCheckService.checkToken(httpServletRequest);
 
         Account hostAccount = accountRepository.findByAccountNumberWithPessimisticLock(
                 request.getHostAccountNumber()).get();

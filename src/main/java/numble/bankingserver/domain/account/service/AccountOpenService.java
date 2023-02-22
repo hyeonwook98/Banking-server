@@ -6,46 +6,33 @@ import numble.bankingserver.domain.account.repository.AccountRepository;
 import numble.bankingserver.domain.accountfactory.dto.request.AccountOpenRequest;
 import numble.bankingserver.domain.accountfactory.service.AccountFactoryService;
 import numble.bankingserver.domain.user.entity.User;
-import numble.bankingserver.domain.user.repository.UserRepository;
 import numble.bankingserver.global.dto.response.SuccessResponse;
-import numble.bankingserver.global.error.ErrorCode;
-import numble.bankingserver.global.exception.BankingException;
-import numble.bankingserver.global.jwt.JwtTokenProvider;
+import numble.bankingserver.global.jwt.JwtTokenCheckService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
 public class AccountOpenService {
 
-    private final UserRepository userRepository;
     private final AccountRepository accountRepository;
+    private final JwtTokenCheckService jwtTokenCheckService;
     private final AccountFactoryService accountFactoryService;
-    private final JwtTokenProvider jwtTokenProvider;
 
     @Transactional
     public ResponseEntity<SuccessResponse> openAccount(HttpServletRequest httpServletRequest,
                                                        AccountOpenRequest request) {
 
-        String bearerToken = jwtTokenProvider.resolveToken(httpServletRequest);
-        String token = jwtTokenProvider.parseToken(bearerToken);
+        User hostUser = jwtTokenCheckService.checkToken(httpServletRequest);
 
-        if (token == null) {
-            throw new BankingException(ErrorCode.INVALID_JWT);
-        }
-
-        String findId = jwtTokenProvider.getTokenSubject(token);
-        User findUser = userRepository.findById(findId)
-                .orElseThrow(() -> new BankingException(ErrorCode.USER_NOT_FOUND));
         Long accountNumber = accountFactoryService.setAccountNumber(request);
 
         Account account = Account.builder()
-                .user(findUser)
+                .user(hostUser)
                 .accountNumber(accountNumber)
                 .accountType(request.getAccountType())
                 .build();
