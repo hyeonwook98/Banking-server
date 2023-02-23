@@ -5,14 +5,12 @@ import numble.bankingserver.domain.friendlist.dto.response.SearchFriendListRespo
 import numble.bankingserver.domain.friendlist.dto.SearchFriendDto;
 import numble.bankingserver.domain.friendlist.repository.FriendListRepository;
 import numble.bankingserver.domain.user.entity.User;
-import numble.bankingserver.global.jwt.JwtTokenCheckService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,7 +19,6 @@ import java.util.stream.Collectors;
 public class FriendSearchService {
 
     private final FriendListRepository friendListRepository;
-    private final JwtTokenCheckService jwtTokenCheckService;
 
     @Transactional(readOnly = true)
     public SearchFriendListResponse searchFriend(User hostUser) {
