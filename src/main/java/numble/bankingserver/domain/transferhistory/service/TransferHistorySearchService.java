@@ -6,7 +6,6 @@ import numble.bankingserver.domain.transferhistory.dto.TransferHistorySearchDto;
 import numble.bankingserver.domain.transferhistory.dto.request.TransferHistorySearchRequest;
 import numble.bankingserver.domain.transferhistory.entity.TransferHistory;
 import numble.bankingserver.domain.transferhistory.repository.TransferHistoryCustomRepositoryImpl;
-import numble.bankingserver.domain.transferhistory.repository.TransferHistoryRepository;
 import numble.bankingserver.domain.user.entity.User;
 import numble.bankingserver.global.error.ErrorCode;
 import numble.bankingserver.global.exception.BankingException;
@@ -18,7 +17,7 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
-public class HistorySearchService {
+public class TransferHistorySearchService {
 
     private final AccountRepository accountRepository;
     private final TransferHistoryCustomRepositoryImpl transferHistoryCustomRepository;
