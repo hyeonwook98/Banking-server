@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import numble.bankingserver.global.enums.TransferType;
 
+import java.time.LocalDateTime;
+
 @AllArgsConstructor
 @Getter
 public class TransferHistorySearchDto {
@@ -12,4 +14,5 @@ public class TransferHistorySearchDto {
     private TransferType transferType;
     private Long amount;
     private Long balance;
+    private LocalDateTime transferAt;
 }

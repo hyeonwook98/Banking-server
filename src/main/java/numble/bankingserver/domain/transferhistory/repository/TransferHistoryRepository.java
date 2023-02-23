@@ -8,6 +8,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface TransferHistoryRepository extends JpaRepository<TransferHistory, Long> {
-    List<TransferHistory> findByHostAccountNumberOrderByCreatedAtDesc(Long accountNumber);
-    List<TransferHistory> findByHostAccountNumberAndTransferTypeOrderByCreatedAtDesc(Long accountNumber, TransferType type);
 }
