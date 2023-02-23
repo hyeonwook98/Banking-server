@@ -3,7 +3,7 @@ package numble.bankingserver.domain.transferhistory.controller;
 import lombok.RequiredArgsConstructor;
 import numble.bankingserver.domain.transferhistory.dto.TransferHistorySearchDto;
 import numble.bankingserver.domain.transferhistory.dto.request.TransferHistorySearchRequest;
-import numble.bankingserver.domain.transferhistory.service.HistorySearchService;
+import numble.bankingserver.domain.transferhistory.service.TransferHistorySearchService;
 import numble.bankingserver.domain.user.entity.User;
 import numble.bankingserver.global.jwt.JwtTokenCheckService;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +21,7 @@ import java.util.List;
 public class TransferHistoryController {
 
     private final JwtTokenCheckService jwtTokenCheckService;
-    private final HistorySearchService historySearchService;
+    private final TransferHistorySearchService historySearchService;
 
     @PostMapping("/search")
     public List<TransferHistorySearchDto> searchTransferHistory(HttpServletRequest httpServletRequest,
