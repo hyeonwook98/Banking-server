@@ -26,10 +26,8 @@ public class AllHistorySearchService {
     private final JwtTokenCheckService jwtTokenCheckService;
 
     @Transactional(readOnly = true)
-    public List<TransferHistorySearchDto> searchAllHistory(HttpServletRequest httpServletRequest,
+    public List<TransferHistorySearchDto> searchAllHistory(User hostUser,
                                                            TransferHistorySearchRequest request) {
-
-        User hostUser = jwtTokenCheckService.checkToken(httpServletRequest);
 
         accountRepository.findByUserAndAccountNumber(hostUser, request.getAccountNumber())
                 .orElseThrow(() -> new BankingException(ErrorCode.WRONG_ACCESS));

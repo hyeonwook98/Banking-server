@@ -6,6 +6,7 @@ import numble.bankingserver.domain.transferhistory.dto.TransferHistorySearchDto;
 import numble.bankingserver.domain.transferhistory.dto.request.TransferHistorySearchRequest;
 import numble.bankingserver.domain.transferhistory.entity.TransferHistory;
 import numble.bankingserver.domain.transferhistory.repository.TransferHistoryRepository;
+import numble.bankingserver.domain.user.entity.User;
 import numble.bankingserver.global.enums.TransferType;
 import numble.bankingserver.global.error.ErrorCode;
 import numble.bankingserver.global.exception.BankingException;
@@ -26,10 +27,8 @@ public class DepositHistorySearchService {
     private final JwtTokenCheckService jwtTokenCheckService;
 
     @Transactional(readOnly = true)
-    public List<TransferHistorySearchDto> searchDepositHistory(HttpServletRequest httpServletRequest,
-                                                                   TransferHistorySearchRequest request) {
-
-        jwtTokenCheckService.checkToken(httpServletRequest);
+    public List<TransferHistorySearchDto> searchDepositHistory(User hostUser,
+                                                               TransferHistorySearchRequest request) {
 
         accountRepository.findByAccountNumber(request.getAccountNumber())
                 .orElseThrow(() -> new BankingException(ErrorCode.ACCOUNT_NOT_FOUND));

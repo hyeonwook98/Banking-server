@@ -26,9 +26,7 @@ public class FriendAddService {
     private final JwtTokenCheckService jwtTokenCheckService;
 
     @Transactional
-    public ResponseEntity<SuccessResponse> addFriend(HttpServletRequest httpServletRequest, FriendAddRequest request) {
-
-        User hostUser = jwtTokenCheckService.checkToken(httpServletRequest);
+    public ResponseEntity<SuccessResponse> addFriend(User hostUser, FriendAddRequest request) {
 
         User friendUser = userRepository.findByPhoneNumber(request.getPhoneNumber())
                 .orElseThrow(() -> new BankingException(ErrorCode.USER_NOT_FOUND));

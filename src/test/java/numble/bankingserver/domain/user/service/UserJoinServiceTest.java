@@ -25,7 +25,7 @@ class UserJoinServiceTest {
     @Test
     @Transactional
     @DisplayName("회원가입성공")
-    public void userJoin() {
+    public void joinUser() {
 
         UserJoinRequest request = UserJoinRequest.builder()
                 .id("asdf")

@@ -1,7 +1,7 @@
 package numble.bankingserver.domain.account.service;
 
 import lombok.RequiredArgsConstructor;
-import numble.bankingserver.domain.account.dto.request.AccountCloseRequest;
+import numble.bankingserver.domain.account.dto.request.AccountDepositRequest;
 import numble.bankingserver.domain.account.entity.Account;
 import numble.bankingserver.domain.account.repository.AccountRepository;
 import numble.bankingserver.global.dto.response.SuccessResponse;
@@ -12,29 +12,24 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
 @RequiredArgsConstructor
 @Service
-public class AccountCloseService {
+public class AccountDepositService {
 
     private final AccountRepository accountRepository;
 
     @Transactional
-    public ResponseEntity<SuccessResponse> closeAccount(AccountCloseRequest request) {
+    public ResponseEntity<SuccessResponse> depositMoney(AccountDepositRequest request) {
 
         Account account = accountRepository.findByAccountNumberWithPessimisticLock(request.getAccountNumber())
                 .orElseThrow(() -> new BankingException(ErrorCode.ACCOUNT_NOT_FOUND));
 
-        if (account.getBalance() != 0L) {
-            throw new BankingException(ErrorCode.MONEY_EXIST_IN_ACCOUNT);
-        }
-
-        accountRepository.delete(account);
+        account.deposit(request.getDepositAmount());
 
         return new ResponseEntity<>(
                 SuccessResponse.builder()
                         .status(HttpStatus.OK.value())
-                        .message("Account Close Success")
+                        .message("Deposit Success")
                         .build(),
                 HttpStatus.valueOf(HttpStatus.OK.value())
         );

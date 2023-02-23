@@ -6,6 +6,8 @@ import numble.bankingserver.domain.transferhistory.dto.request.TransferHistorySe
 import numble.bankingserver.domain.transferhistory.service.AllHistorySearchService;
 import numble.bankingserver.domain.transferhistory.service.DepositHistorySearchService;
 import numble.bankingserver.domain.transferhistory.service.WithdrawHistorySearchService;
+import numble.bankingserver.domain.user.entity.User;
+import numble.bankingserver.global.jwt.JwtTokenCheckService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,22 +25,26 @@ public class TransferHistoryController {
     private final AllHistorySearchService transferHistoryAllSearchService;
     private final DepositHistorySearchService depositHistorySearchService;
     private final WithdrawHistorySearchService withdrawHistorySearchService;
+    private final JwtTokenCheckService jwtTokenCheckService;
 
     @PostMapping("/search/all")
     public List<TransferHistorySearchDto> searchAll(HttpServletRequest httpServletRequest,
                                                       @RequestBody @Valid TransferHistorySearchRequest request) {
-        return transferHistoryAllSearchService.searchAllHistory(httpServletRequest, request);
+        User hostUser = jwtTokenCheckService.checkToken(httpServletRequest);
+        return transferHistoryAllSearchService.searchAllHistory(hostUser, request);
     }
 
     @PostMapping("/search/deposit")
     public List<TransferHistorySearchDto> searchDeposit(HttpServletRequest httpServletRequest,
                                                     @RequestBody @Valid TransferHistorySearchRequest request) {
-        return depositHistorySearchService.searchDepositHistory(httpServletRequest, request);
+        User hostUser = jwtTokenCheckService.checkToken(httpServletRequest);
+        return depositHistorySearchService.searchDepositHistory(hostUser, request);
     }
 
     @PostMapping("/search/withdraw")
     public List<TransferHistorySearchDto> searchWithdraw(HttpServletRequest httpServletRequest,
                                                     @RequestBody @Valid TransferHistorySearchRequest request) {
-        return withdrawHistorySearchService.searchWithdrawHistory(httpServletRequest, request);
+        User hostUser = jwtTokenCheckService.checkToken(httpServletRequest);
+        return withdrawHistorySearchService.searchWithdrawHistory(hostUser, request);
     }
 }

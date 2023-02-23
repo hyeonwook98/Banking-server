@@ -6,6 +6,7 @@ import numble.bankingserver.domain.account.entity.Account;
 import numble.bankingserver.domain.account.repository.AccountRepository;
 import numble.bankingserver.domain.transferhistory.entity.TransferHistory;
 import numble.bankingserver.domain.transferhistory.repository.TransferHistoryRepository;
+import numble.bankingserver.domain.user.entity.User;
 import numble.bankingserver.global.dto.response.SuccessResponse;
 import numble.bankingserver.global.enums.TransferType;
 import numble.bankingserver.global.jwt.JwtTokenCheckService;
@@ -22,13 +23,9 @@ public class AccountTransferService {
 
     private final AccountRepository accountRepository;
     private final TransferHistoryRepository transferHistoryRepository;
-    private final JwtTokenCheckService jwtTokenCheckService;
 
     @Transactional
-    public ResponseEntity<SuccessResponse> transferAccount(HttpServletRequest httpServletRequest,
-                                                           AccountVerifyRequest request) {
-
-        jwtTokenCheckService.checkToken(httpServletRequest);
+    public ResponseEntity<SuccessResponse> transferAccount(AccountVerifyRequest request) {
 
         Account hostAccount = accountRepository.findByAccountNumberWithPessimisticLock(
                 request.getHostAccountNumber()).get();

@@ -1,5 +1,6 @@
 package numble.bankingserver.domain.account.service;
 
+import numble.bankingserver.domain.account.dto.request.AccountDepositRequest;
 import numble.bankingserver.domain.account.entity.Account;
 import numble.bankingserver.domain.account.repository.AccountRepository;
 import numble.bankingserver.domain.accountfactory.dto.request.AccountOpenRequest;
@@ -19,8 +20,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+@Transactional
 @SpringBootTest
-class AccountOpenServiceTest {
+class AccountDepositServiceTest {
 
     @Autowired
     UserRepository userRepository;
@@ -29,12 +31,14 @@ class AccountOpenServiceTest {
     @Autowired
     AccountOpenService accountOpenService;
     @Autowired
+    AccountDepositService accountDepositService;
+    @Autowired
     UserJoinService userJoinService;
 
     @Test
     @Transactional
-    @DisplayName("계좌개설 성공")
-    void openAccount() {
+    @DisplayName("계좌에 입금하기")
+    void depositMoney() {
 
         UserJoinRequest request = UserJoinRequest.builder()
                 .id("asdf")
@@ -54,8 +58,14 @@ class AccountOpenServiceTest {
         accountOpenService.openAccount(hostUser.get(), accountOpenRequest);
 
         List<Account> accountList = accountRepository.findByUser(hostUser.get());
+        Account account = accountList.get(0);
 
-        Assertions.assertTrue(accountList.size() == 1);
+        AccountDepositRequest accountDepositRequest = new AccountDepositRequest(account.getAccountNumber(), 100L);
+        accountDepositService.depositMoney(accountDepositRequest);
+
+        List<Account> list = accountRepository.findByUser(hostUser.get());
+
+        Assertions.assertEquals(100L, list.get(0).getBalance());
 
     }
 }

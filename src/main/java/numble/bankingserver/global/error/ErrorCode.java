@@ -15,6 +15,7 @@ public enum ErrorCode {
     WRONG_ACCOUNT_TYPE(401, "Wrong Account Type"),
     WRONG_ACCESS(401, "Wrong Access"),
     ACCOUNT_STILL_EXISTS(401, "Account Still Exists"),
+    MONEY_EXIST_IN_ACCOUNT(401, "Money Exist In Account"),
 
     // 404
     USER_NOT_FOUND(404, "User Not Found"),
