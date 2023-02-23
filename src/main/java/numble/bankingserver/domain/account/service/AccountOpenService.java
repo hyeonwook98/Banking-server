@@ -23,8 +23,7 @@ public class AccountOpenService {
     private final AccountFactoryService accountFactoryService;
 
     @Transactional
-    public ResponseEntity<SuccessResponse> openAccount(User hostUser,
-                                                       AccountOpenRequest request) {
+    public ResponseEntity<SuccessResponse> openAccount(User hostUser, AccountOpenRequest request) {
 
         Long accountNumber = accountFactoryService.setAccountNumber(request);
 
