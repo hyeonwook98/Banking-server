@@ -42,7 +42,7 @@ public class Account extends BaseTimeEntity {
     @NonNull
     private Long accountNumber;
 
-    private Long balance = 10000L;
+    private Long balance = 0L;
 
     @NotNull
     @Enumerated(EnumType.STRING)

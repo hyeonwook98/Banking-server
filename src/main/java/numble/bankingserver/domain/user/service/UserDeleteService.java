@@ -11,6 +11,7 @@ import numble.bankingserver.global.jwt.JwtTokenCheckService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -22,10 +23,8 @@ public class UserDeleteService {
     private final AccountRepository accountRepository;
     private final JwtTokenCheckService jwtTokenCheckService;
 
-
-    public ResponseEntity<SuccessResponse> deleteUser(HttpServletRequest httpServletRequest) {
-
-        User hostUser = jwtTokenCheckService.checkToken(httpServletRequest);
+    @Transactional
+    public ResponseEntity<SuccessResponse> deleteUser(User hostUser) {
 
         if (accountRepository.findByUser(hostUser).size() != 0) {
             throw new BankingException(ErrorCode.ACCOUNT_STILL_EXISTS);

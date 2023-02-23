@@ -20,14 +20,11 @@ import javax.servlet.http.HttpServletRequest;
 public class AccountOpenService {
 
     private final AccountRepository accountRepository;
-    private final JwtTokenCheckService jwtTokenCheckService;
     private final AccountFactoryService accountFactoryService;
 
     @Transactional
-    public ResponseEntity<SuccessResponse> openAccount(HttpServletRequest httpServletRequest,
+    public ResponseEntity<SuccessResponse> openAccount(User hostUser,
                                                        AccountOpenRequest request) {
-
-        User hostUser = jwtTokenCheckService.checkToken(httpServletRequest);
 
         Long accountNumber = accountFactoryService.setAccountNumber(request);
 

@@ -5,10 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class AccountVerifyRequest {
-
-    private Long hostAccountNumber;
-    private Long friendAccountNumber;
-    private Long sentAmount;
-
+public class AccountDepositRequest {
+    private Long accountNumber;
+    private Long depositAmount;
 }

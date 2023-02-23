@@ -24,9 +24,7 @@ public class FriendSearchService {
     private final JwtTokenCheckService jwtTokenCheckService;
 
     @Transactional(readOnly = true)
-    public SearchFriendListResponse searchFriend(HttpServletRequest httpServletRequest) {
-
-        User hostUser = jwtTokenCheckService.checkToken(httpServletRequest);
+    public SearchFriendListResponse searchFriend(User hostUser) {
 
         PageRequest pageRequest = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "friendUser.name"));
         Page<User> pageFriends = friendListRepository.findFriendUser(hostUser, pageRequest);

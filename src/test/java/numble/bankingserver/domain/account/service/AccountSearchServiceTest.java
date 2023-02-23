@@ -1,5 +1,7 @@
 package numble.bankingserver.domain.account.service;
 
+import numble.bankingserver.domain.account.dto.AccountSearchDto;
+import numble.bankingserver.domain.account.dto.response.AccountSearchResponse;
 import numble.bankingserver.domain.account.entity.Account;
 import numble.bankingserver.domain.account.repository.AccountRepository;
 import numble.bankingserver.domain.accountfactory.dto.request.AccountOpenRequest;
@@ -16,11 +18,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @SpringBootTest
-class AccountOpenServiceTest {
+class AccountSearchServiceTest {
 
     @Autowired
     UserRepository userRepository;
@@ -30,11 +37,13 @@ class AccountOpenServiceTest {
     AccountOpenService accountOpenService;
     @Autowired
     UserJoinService userJoinService;
+    @Autowired
+    AccountSearchService accountSearchService;
 
     @Test
     @Transactional
-    @DisplayName("계좌개설 성공")
-    void openAccount() {
+    @DisplayName("계좌조회 성공")
+    void searchAccounts() {
 
         UserJoinRequest request = UserJoinRequest.builder()
                 .id("asdf")
@@ -52,10 +61,11 @@ class AccountOpenServiceTest {
 
         AccountOpenRequest accountOpenRequest = new AccountOpenRequest(AccountType.SAVINGS_ACCOUNT);
         accountOpenService.openAccount(hostUser.get(), accountOpenRequest);
+        accountOpenService.openAccount(hostUser.get(), accountOpenRequest);
+        accountOpenService.openAccount(hostUser.get(), accountOpenRequest);
 
-        List<Account> accountList = accountRepository.findByUser(hostUser.get());
-
-        Assertions.assertTrue(accountList.size() == 1);
+        AccountSearchResponse accountSearchResponse = accountSearchService.searchAccount(hostUser.get());
+        Assertions.assertTrue(accountSearchResponse.getCount() == 3);
 
     }
 }

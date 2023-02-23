@@ -10,6 +10,8 @@ import numble.bankingserver.global.jwt.JwtProperties;
 import numble.bankingserver.global.jwt.JwtTokenProvider;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletWebRequest;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -21,17 +23,12 @@ public class UserLoginService {
     private final JwtTokenProvider jwtTokenProvider;
 
     @Transactional
-    public UserLoginResponse loginUser(UserLoginRequest request, HttpServletResponse response) {
+    public UserLoginResponse loginUser(UserLoginRequest request) {
 
-        String id = request.getId();
-        String password = request.getPassword();
-
-        userRepository.findByIdAndPassword(id, password)
+        userRepository.findByIdAndPassword(request.getId(), request.getPassword())
                 .orElseThrow(() -> new BankingException(ErrorCode.USER_NOT_FOUND));
 
-        String accessToken = jwtTokenProvider.createToken(id);
-
-        response.addHeader(JwtProperties.HEADER, JwtProperties.TOKEN_PREFIX+accessToken);
+        String accessToken = jwtTokenProvider.createToken(request.getId());
 
         return UserLoginResponse.builder()
                 .accessToken(JwtProperties.TOKEN_PREFIX +accessToken)

@@ -13,20 +13,15 @@ import numble.bankingserver.global.jwt.JwtTokenCheckService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
-
 @RequiredArgsConstructor
 @Service
 public class AccountVerifyService {
 
     private final AccountRepository accountRepository;
     private final FriendListRepository friendListRepository;
-    private final JwtTokenCheckService jwtTokenCheckService;
 
     @Transactional
-    public AccountVerifyResponse verifyAccount(HttpServletRequest httpServletRequest, AccountVerifyRequest request) {
-
-        User hostUser = jwtTokenCheckService.checkToken(httpServletRequest);
+    public AccountVerifyResponse verifyAccount(User hostUser, AccountVerifyRequest request) {
 
         accountRepository.findByUserAndAccountNumber(hostUser, request.getHostAccountNumber())
                 .orElseThrow(() -> new BankingException(ErrorCode.WRONG_ACCESS));
