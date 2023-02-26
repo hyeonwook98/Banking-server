@@ -5,11 +5,11 @@ import numble.bankingserver.domain.accountfactory.entity.AccountFactory;
 import numble.bankingserver.domain.accountfactory.repository.AccountFactoryRepository;
 import numble.bankingserver.domain.user.entity.User;
 import numble.bankingserver.domain.user.repository.UserRepository;
-import numble.bankingserver.global.enums.AccountType;
 import numble.bankingserver.global.enums.Gender;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @RequiredArgsConstructor
 @SpringBootApplication
@@ -17,6 +17,7 @@ public class BankingServerApplication {
 
 	private final UserRepository userRepository;
 	private final AccountFactoryRepository accountFactoryRepository;
+	private final BCryptPasswordEncoder passwordEncoder;
 
 	public static void main(String[] args) {
 		SpringApplication.run(BankingServerApplication.class, args);
@@ -24,12 +25,12 @@ public class BankingServerApplication {
 
 	@Bean
 	public void setting() {
-		accountFactoryRepository.save(AccountFactory.builder()
-				.accountType(AccountType.SAVINGS_ACCOUNT).build());
+//		accountFactoryRepository.save(AccountFactory.builder()
+//				.accountType(AccountType.SAVINGS_ACCOUNT).build());
 
 		userRepository.save(User.builder()
 				.id("gusdnr")
-				.password("1234")
+				.password(passwordEncoder.encode("1234"))
 				.name("김현욱")
 				.phoneNumber("010-2988-9330")
 				.email("gusdnr@naver.com")
@@ -39,7 +40,7 @@ public class BankingServerApplication {
 				.build());
 		userRepository.save(User.builder()
 				.id("wpdhks")
-				.password("1234")
+				.password(passwordEncoder.encode("1234"))
 				.name("김제완")
 				.phoneNumber("010-3274-9330")
 				.email("wpdhks@naver.com")
@@ -49,7 +50,7 @@ public class BankingServerApplication {
 				.build());
 		userRepository.save(User.builder()
 				.id("guscjf")
-				.password("1234")
+				.password(passwordEncoder.encode("1234"))
 				.name("김현철")
 				.phoneNumber("010-9713-9310")
 				.email("guscjf@naver.com")
