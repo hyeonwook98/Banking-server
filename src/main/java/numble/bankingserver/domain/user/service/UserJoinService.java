@@ -9,6 +9,7 @@ import numble.bankingserver.global.error.ErrorCode;
 import numble.bankingserver.global.exception.BankingException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserJoinService {
 
     private final UserRepository userRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     @Transactional
     public ResponseEntity<SuccessResponse> joinUser(UserJoinRequest request) {
@@ -35,7 +37,7 @@ public class UserJoinService {
 
         userRepository.save(User.builder()
                 .id(request.getId())
-                .password(request.getPassword())
+                .password(passwordEncoder.encode(request.getPassword()))
                 .name(request.getName())
                 .phoneNumber(request.getPhoneNumber())
                 .email(request.getEmail())
