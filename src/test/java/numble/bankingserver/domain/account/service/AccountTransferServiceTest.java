@@ -40,7 +40,7 @@ class AccountTransferServiceTest {
     @Test
     @Transactional
     @DisplayName("계좌이체하기")
-    void transferAccount() {
+    void transferAccount() throws InterruptedException {
 
         UserJoinRequest request = UserJoinRequest.builder()
                 .id("asdf")
@@ -63,7 +63,7 @@ class AccountTransferServiceTest {
         Account hostAccount = hostAccountList.get(0);
 
         AccountDepositRequest accountDepositRequest = new AccountDepositRequest(hostAccount.getAccountNumber(), 10000L);
-        accountDepositService.depositMoney(accountDepositRequest);
+        accountDepositService.depositMoney(hostUser.get(), accountDepositRequest);
 
         UserJoinRequest request1 = UserJoinRequest.builder()
                 .id("aaaa")

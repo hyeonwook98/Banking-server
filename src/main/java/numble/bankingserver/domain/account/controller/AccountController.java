@@ -49,15 +49,15 @@ public class AccountController {
     @PostMapping("/close")
     public ResponseEntity<SuccessResponse> closeAccount(HttpServletRequest httpServletRequest,
                                                         @RequestBody @Valid AccountCloseRequest request) {
-        jwtTokenCheckService.checkToken(httpServletRequest);
-        return accountCloseService.closeAccount(request);
+        User hostUser = jwtTokenCheckService.checkToken(httpServletRequest);
+        return accountCloseService.closeAccount(hostUser, request);
     }
 
     @PostMapping("/deposit")
     public ResponseEntity<SuccessResponse> depositMoney(HttpServletRequest httpServletRequest,
                                                         @RequestBody @Valid AccountDepositRequest request) {
-        jwtTokenCheckService.checkToken(httpServletRequest);
-        return accountDepositService.depositMoney(request);
+        User hostUser = jwtTokenCheckService.checkToken(httpServletRequest);
+        return accountDepositService.depositMoney(hostUser, request);
     }
 
     @GetMapping("/search")
@@ -75,7 +75,7 @@ public class AccountController {
 
     @PostMapping("/transfer")
     public ResponseEntity<SuccessResponse> transferAccount(HttpServletRequest httpServletRequest,
-                                               @RequestBody @Valid AccountVerifyRequest request) {
+                                               @RequestBody @Valid AccountVerifyRequest request) throws InterruptedException {
         jwtTokenCheckService.checkToken(httpServletRequest);
         return accountTransferService.transferAccount(request);
     }

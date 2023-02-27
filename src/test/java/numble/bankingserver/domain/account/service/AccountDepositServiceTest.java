@@ -61,7 +61,7 @@ class AccountDepositServiceTest {
         Account account = accountList.get(0);
 
         AccountDepositRequest accountDepositRequest = new AccountDepositRequest(account.getAccountNumber(), 100L);
-        accountDepositService.depositMoney(accountDepositRequest);
+        accountDepositService.depositMoney(hostUser.get(), accountDepositRequest);
 
         List<Account> list = accountRepository.findByUser(hostUser.get());
 

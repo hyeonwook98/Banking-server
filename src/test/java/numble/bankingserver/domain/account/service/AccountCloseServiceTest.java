@@ -65,7 +65,7 @@ class AccountCloseServiceTest {
         Account account = accountList.get(0);
 
         AccountCloseRequest accountCloseRequest = new AccountCloseRequest(account.getAccountNumber());
-        accountCloseService.closeAccount(accountCloseRequest);
+        accountCloseService.closeAccount(hostUser.get(), accountCloseRequest);
 
         Optional<Account> findAccount = accountRepository.findByAccountNumber(account.getAccountNumber());
 
@@ -99,12 +99,12 @@ class AccountCloseServiceTest {
         Account account = accountList.get(0);
 
         AccountDepositRequest accountDepositRequest = new AccountDepositRequest(account.getAccountNumber(), 100L);
-        accountDepositService.depositMoney(accountDepositRequest);
+        accountDepositService.depositMoney(hostUser.get(), accountDepositRequest);
 
         AccountCloseRequest accountCloseRequest = new AccountCloseRequest(account.getAccountNumber());
 
         Assertions.assertThrows(BankingException.class, () -> {
-            accountCloseService.closeAccount(accountCloseRequest);
+            accountCloseService.closeAccount(hostUser.get(), accountCloseRequest);
         });
 
     }
