@@ -25,8 +25,6 @@ public class BankingServerApplication {
 
 	@Bean
 	public void setting() {
-//		accountFactoryRepository.save(AccountFactory.builder()
-//				.accountType(AccountType.SAVINGS_ACCOUNT).build());
 
 		userRepository.save(User.builder()
 				.id("gusdnr")

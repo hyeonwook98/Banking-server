@@ -48,7 +48,7 @@ class HistorySearchServiceTest {
     @Test
     @Transactional
     @DisplayName("이체내역전체조회")
-    void searchAllHistory() {
+    void searchAllHistory() throws InterruptedException {
 
         UserJoinRequest request = UserJoinRequest.builder()
                 .id("asdf")
@@ -72,7 +72,7 @@ class HistorySearchServiceTest {
 
         AccountDepositRequest accountDepositRequest = new AccountDepositRequest(
                 hostAccount.getAccountNumber(), 10000L);
-        accountDepositService.depositMoney(accountDepositRequest);
+        accountDepositService.depositMoney(hostUser.get(), accountDepositRequest);
 
         UserJoinRequest request1 = UserJoinRequest.builder()
                 .id("aaaa")
@@ -113,7 +113,7 @@ class HistorySearchServiceTest {
     @Test
     @Transactional
     @DisplayName("입금내역만조회")
-    void searchDepositHistory() {
+    void searchDepositHistory() throws InterruptedException {
 
         UserJoinRequest request = UserJoinRequest.builder()
                 .id("asdf")
@@ -137,7 +137,7 @@ class HistorySearchServiceTest {
 
         AccountDepositRequest accountDepositRequest = new AccountDepositRequest(
                 hostAccount.getAccountNumber(), 10000L);
-        accountDepositService.depositMoney(accountDepositRequest);
+        accountDepositService.depositMoney(hostUser.get(), accountDepositRequest);
 
         UserJoinRequest request1 = UserJoinRequest.builder()
                 .id("aaaa")
@@ -166,7 +166,7 @@ class HistorySearchServiceTest {
 
         AccountDepositRequest accountDepositRequest2 = new AccountDepositRequest(
                 friendAccount.getAccountNumber(), 10000L);
-        accountDepositService.depositMoney(accountDepositRequest2);
+        accountDepositService.depositMoney(friendUser.get(), accountDepositRequest2);
 
         accountTransferService.transferAccount(accountVerifyRequest);
         accountTransferService.transferAccount(accountVerifyRequest);
@@ -183,7 +183,7 @@ class HistorySearchServiceTest {
     @Test
     @Transactional
     @DisplayName("출금내역만조회")
-    void searchWithdrawtHistory() {
+    void searchWithdrawtHistory() throws InterruptedException {
 
         UserJoinRequest request = UserJoinRequest.builder()
                 .id("asdf")
@@ -207,7 +207,7 @@ class HistorySearchServiceTest {
 
         AccountDepositRequest accountDepositRequest = new AccountDepositRequest(
                 hostAccount.getAccountNumber(), 10000L);
-        accountDepositService.depositMoney(accountDepositRequest);
+        accountDepositService.depositMoney(hostUser.get(), accountDepositRequest);
 
         UserJoinRequest request1 = UserJoinRequest.builder()
                 .id("aaaa")
@@ -236,7 +236,7 @@ class HistorySearchServiceTest {
 
         AccountDepositRequest accountDepositRequest2 = new AccountDepositRequest(
                 friendAccount.getAccountNumber(), 10000L);
-        accountDepositService.depositMoney(accountDepositRequest2);
+        accountDepositService.depositMoney(friendUser.get(), accountDepositRequest2);
 
         accountTransferService.transferAccount(accountVerifyRequest);
         accountTransferService.transferAccount(accountVerifyRequest);

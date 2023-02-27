@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import numble.bankingserver.domain.account.dto.request.AccountVerifyRequest;
 import numble.bankingserver.domain.account.entity.Account;
 import numble.bankingserver.domain.account.repository.AccountRepository;
+import numble.bankingserver.domain.alarm.dto.request.AlarmRequest;
+import numble.bankingserver.domain.alarm.service.AlarmService;
 import numble.bankingserver.domain.transferhistory.entity.TransferHistory;
 import numble.bankingserver.domain.transferhistory.repository.TransferHistoryRepository;
 import numble.bankingserver.global.dto.response.SuccessResponse;
@@ -19,9 +21,10 @@ public class AccountTransferService {
 
     private final AccountRepository accountRepository;
     private final TransferHistoryRepository transferHistoryRepository;
+    private final AlarmService alarmService;
 
     @Transactional
-    public ResponseEntity<SuccessResponse> transferAccount(AccountVerifyRequest request) {
+    public ResponseEntity<SuccessResponse> transferAccount(AccountVerifyRequest request) throws InterruptedException {
 
         Account hostAccount = accountRepository.findByAccountNumberWithPessimisticLock(
                 request.getHostAccountNumber()).get();
@@ -47,6 +50,14 @@ public class AccountTransferService {
                 .amount(request.getSentAmount())
                 .balance(friendAccount.getBalance())
                 .build());
+
+        AlarmRequest hostAlarmRequest = new AlarmRequest(TransferType.WITHDRAW, request.getSentAmount(),
+                request.getHostAccountNumber(), friendAccount.getUser().getName());
+        alarmService.requestAlarm(hostAlarmRequest);
+
+        AlarmRequest friendAlarmRequest = new AlarmRequest(TransferType.DEPOSIT, request.getSentAmount(),
+                request.getFriendAccountNumber(), hostAccount.getUser().getName());
+        alarmService.requestAlarm(friendAlarmRequest);
 
         return new ResponseEntity<>(
                 SuccessResponse.builder()

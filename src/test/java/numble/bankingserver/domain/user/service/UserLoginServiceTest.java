@@ -11,6 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletWebRequest;
@@ -25,6 +26,8 @@ class UserLoginServiceTest {
 
     @Autowired
     UserLoginService userLoginService;
+    @Autowired
+    BCryptPasswordEncoder passwordEncoder;
 
     @Test
     @Transactional
@@ -36,7 +39,7 @@ class UserLoginServiceTest {
 
         User user = User.builder()
                 .id("asdf")
-                .password("asdf")
+                .password(passwordEncoder.encode("asdf"))
                 .name("홍길동")
                 .phoneNumber("010-0000-0000")
                 .email("ghdrlfehd@naver.com")
@@ -67,7 +70,7 @@ class UserLoginServiceTest {
 
         User user = User.builder()
                 .id("asdf")
-                .password("asdf")
+                .password(passwordEncoder.encode("asdf"))
                 .name("홍길동")
                 .phoneNumber("010-0000-0000")
                 .email("ghdrlfehd@naver.com")

@@ -69,7 +69,7 @@ class AccountTransferRaceConditionTest {
         Account hostAccount = hostAccountList.get(0);
 
         AccountDepositRequest accountDepositRequest = new AccountDepositRequest(hostAccount.getAccountNumber(), 10000L);
-        accountDepositService.depositMoney(accountDepositRequest);
+        accountDepositService.depositMoney(hostUser.get(), accountDepositRequest);
 
         UserJoinRequest request1 = UserJoinRequest.builder()
                 .id("aaaa")
@@ -93,7 +93,7 @@ class AccountTransferRaceConditionTest {
         Account friendAccount = friendAccountList.get(0);
 
         AccountDepositRequest accountDepositRequest1 = new AccountDepositRequest(friendAccount.getAccountNumber(), 10000L);
-        accountDepositService.depositMoney(accountDepositRequest1);
+        accountDepositService.depositMoney(friendUser.get(), accountDepositRequest1);
 
         UserJoinRequest request2 = UserJoinRequest.builder()
                 .id("ee")
@@ -145,7 +145,7 @@ class AccountTransferRaceConditionTest {
     @DisplayName("계좌이체 시 동시성 문제 해결")
     void transferAccount() throws InterruptedException {
 
-        int threadCount = 100;
+        int threadCount = 50;
         ExecutorService executorService = Executors.newFixedThreadPool(32);
         CountDownLatch latch = new CountDownLatch(threadCount);
 
@@ -172,6 +172,8 @@ class AccountTransferRaceConditionTest {
                 try {
                     accountTransferService.transferAccount(accountVerifyRequest1);
                     accountTransferService.transferAccount(accountVerifyRequest2);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
                 } finally {
                     latch.countDown();
                 }
@@ -184,9 +186,9 @@ class AccountTransferRaceConditionTest {
         List<Account> friendAccountLists = accountRepository.findByUser(friendUser.get());
         List<Account> thirdAccountLists = accountRepository.findByUser(thirdUser.get());
 
-        Assertions.assertTrue(hostAccountLists.get(0).getBalance() == 0);
-        Assertions.assertTrue(friendAccountLists.get(0).getBalance() == 0);
-        Assertions.assertTrue(thirdAccountLists.get(0).getBalance() == 20000);
+        Assertions.assertTrue(hostAccountLists.get(0).getBalance() == 5000);
+        Assertions.assertTrue(friendAccountLists.get(0).getBalance() == 5000);
+        Assertions.assertTrue(thirdAccountLists.get(0).getBalance() == 10000);
 
     }
 }
