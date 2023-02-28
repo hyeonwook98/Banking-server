@@ -7,7 +7,6 @@ import numble.bankingserver.domain.user.repository.UserRepository;
 import numble.bankingserver.global.dto.response.SuccessResponse;
 import numble.bankingserver.global.error.ErrorCode;
 import numble.bankingserver.global.exception.BankingException;
-import numble.bankingserver.global.jwt.JwtTokenCheckService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -19,7 +18,6 @@ public class UserDeleteService {
 
     private final UserRepository userRepository;
     private final AccountRepository accountRepository;
-    private final JwtTokenCheckService jwtTokenCheckService;
 
     @Transactional
     public ResponseEntity<SuccessResponse> deleteUser(User hostUser) {

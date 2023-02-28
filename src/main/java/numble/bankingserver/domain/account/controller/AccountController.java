@@ -61,7 +61,7 @@ public class AccountController {
     }
 
     @GetMapping("/search")
-    public AccountSearchResponse openAccount(HttpServletRequest httpServletRequest) {
+    public AccountSearchResponse searchAccount(HttpServletRequest httpServletRequest) {
         User hostUser = jwtTokenCheckService.checkToken(httpServletRequest);
         return accountSearchService.searchAccount(hostUser);
     }

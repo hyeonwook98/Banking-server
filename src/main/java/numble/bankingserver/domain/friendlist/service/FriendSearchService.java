@@ -23,14 +23,12 @@ public class FriendSearchService {
     @Transactional(readOnly = true)
     public SearchFriendListResponse searchFriend(User hostUser) {
 
-        PageRequest pageRequest = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "friendUser.name"));
-        Page<User> pageFriends = friendListRepository.findFriendUser(hostUser, pageRequest);
-        List<User> friends = pageFriends.getContent();
+        List<User> friends = friendListRepository.findFriendUser(hostUser);
         List<SearchFriendDto> friendList = friends.stream()
                 .map(user -> new SearchFriendDto(user.getName(), user.getPhoneNumber()))
                 .collect(Collectors.toList());
 
-        return new SearchFriendListResponse(pageFriends.getTotalElements(), friendList);
+        return new SearchFriendListResponse(Long.valueOf(friends.size()), friendList);
 
     }
 }
