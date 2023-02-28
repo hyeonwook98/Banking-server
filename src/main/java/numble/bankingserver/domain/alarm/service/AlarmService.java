@@ -3,10 +3,8 @@ package numble.bankingserver.domain.alarm.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import numble.bankingserver.domain.alarm.dto.request.AlarmRequest;
-import numble.bankingserver.domain.alarm.dto.response.AlarmResponse;
 import numble.bankingserver.global.enums.TransferType;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -15,7 +13,6 @@ public class AlarmService {
 
     public void requestAlarm(AlarmRequest request) throws InterruptedException {
 
-//        Thread.sleep(500);
         String type = null;
         String message = null;
         Long accountNumber = request.getHostAccountNumber() % 100000000;

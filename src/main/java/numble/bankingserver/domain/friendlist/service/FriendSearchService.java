@@ -1,8 +1,8 @@
 package numble.bankingserver.domain.friendlist.service;
 
 import lombok.RequiredArgsConstructor;
-import numble.bankingserver.domain.friendlist.dto.response.SearchFriendListResponse;
 import numble.bankingserver.domain.friendlist.dto.SearchFriendDto;
+import numble.bankingserver.domain.friendlist.dto.response.SearchFriendListResponse;
 import numble.bankingserver.domain.friendlist.repository.FriendListRepository;
 import numble.bankingserver.domain.user.entity.User;
 import org.springframework.data.domain.Page;

@@ -9,7 +9,6 @@ import numble.bankingserver.domain.friendlist.repository.FriendListRepository;
 import numble.bankingserver.domain.user.entity.User;
 import numble.bankingserver.global.error.ErrorCode;
 import numble.bankingserver.global.exception.BankingException;
-import numble.bankingserver.global.jwt.JwtTokenCheckService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
