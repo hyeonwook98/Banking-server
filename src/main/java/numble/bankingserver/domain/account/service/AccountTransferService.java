@@ -23,7 +23,7 @@ public class AccountTransferService {
     private final TransferHistoryRepository transferHistoryRepository;
     private final AlarmService alarmService;
 
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public ResponseEntity<SuccessResponse> transferAccount(AccountVerifyRequest request) throws InterruptedException {
 
         Account hostAccount = accountRepository.findByAccountNumberWithPessimisticLock(
