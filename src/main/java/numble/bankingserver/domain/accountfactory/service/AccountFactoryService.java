@@ -16,7 +16,7 @@ public class AccountFactoryService {
 
     private final AccountFactoryRepository accountFactoryRepository;
 
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public Long setAccountNumber(AccountOpenRequest request) {
 
         if (request.getAccountType() != AccountType.SAVINGS_ACCOUNT) {
